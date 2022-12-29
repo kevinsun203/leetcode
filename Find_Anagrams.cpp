@@ -36,6 +36,7 @@ public:
         // frequency array
         vector<int*> frequency;
 
+        // First window
         for (auto it=characters.begin(); it != characters.end(); it++) {
             frequency.push_back(&(it->second));
         }
