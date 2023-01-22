@@ -28,10 +28,8 @@ public:
         if (root == nullptr) {
             return count-1;
         }
-        int right = 0;
-        int left = 0;
-        left = helper(root->left, count+1);
-        right = helper(root->right, count+1);
+        int left = helper(root->left, count+1);
+        int right = helper(root->right, count+1);
         
         result = max((left-count)+(right-count), result);
         return max(left, right);

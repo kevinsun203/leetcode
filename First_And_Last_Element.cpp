@@ -4,6 +4,7 @@
 #include "vector"
 #include "iostream"
 using namespace std;
+
 class Solution {
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
@@ -16,19 +17,12 @@ public:
         }
         int position = binarySearch(nums, 0, nums.size()-1, target);
         if (position != -1) {
-        
           int position2 = position+1;
           while (position2 < nums.size() && nums[position2] == target) {
-            cout << "here" << endl;
               position2++;
           }
           position2--;
-
-
-          answer.pop_back();
-          answer.pop_back();
-          answer.push_back(position);
-          answer.push_back(position2);
+          answer = {position, position2};
         }
         return answer;
         

@@ -21,19 +21,11 @@ public:
     }
 
     int traverse(TreeNode* root, int count) {
-        if (root->left == nullptr && root->right == nullptr) {
-            return count;
+        if (root == nullptr) {
+            return count-1;
         }
-        int left = 0;
-        int right = 0;
-        if (root->left != nullptr) {
-            left = traverse(root->left, count+1);
-        }
-
-        if (root->right != nullptr) {
-            right = traverse(root->right, count+1);
-        }
+        int left = traverse(root->left, count+1);
+        int right = traverse(root->right, count+1);
         return max(left, right);
-
     }   
 };
