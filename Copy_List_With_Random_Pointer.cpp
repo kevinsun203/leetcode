@@ -1,5 +1,4 @@
-#include "unordered_map"
-using namespace std;
+#include <unordered_map>
 // Definition for a Node.
 class Node {
 public:
@@ -14,34 +13,45 @@ public:
     }
 };
 
+
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-        unordered_map<Node*, Node*> clone;
+        std::unordered_map<Node*, Node*> mapping; // Key: node from original list
+                                                 // Value: node in deep copy list
+        
+        if (head == nullptr) {
+            return nullptr;
+        }
+        Node* newHead = new Node(head->val);
+        
+        mapping[head] = newHead;
         Node* curr = head;
 
-        Node* newHead = nullptr;
-        bool firstTime = true;
         while (curr != nullptr) {
-            if (clone.find(curr) == clone.end()) {
-                clone[curr] = new Node(curr->val);
+            // Create copy of current node if non-existent
+            if (mapping.find(curr) == mapping.end()) {
+                Node* copyCurr = new Node(curr->val);
+                mapping[curr] = copyCurr;
             }
-            if (curr->next != nullptr && clone.find(curr->next) == clone.end()) {
-                clone[curr->next] = new Node(curr->next->val);
-            }
-            clone[curr]->next = curr->next == nullptr ? nullptr : clone[curr->next];
             
-            if (curr->random != nullptr && clone.find(curr->random) == clone.end()) {
-                clone[curr->random] = new Node(curr->random->val);
-            } 
-            clone[curr]->random = curr->random == nullptr ? nullptr : clone[curr->random];
-            
-            if (firstTime) {
-                newHead = clone[curr];
-                firstTime = false;
+            // Create copy of next node if non existent
+            if (curr->next != nullptr && mapping.find(curr->next) == mapping.end()) {
+                mapping[curr->next] = new Node(curr->next->val);
             }
+            Node* nextCopy = curr->next == nullptr ? nullptr : mapping[curr->next];
+            mapping[curr]->next = nextCopy;
+
+            // Create copy of random node if non existent
+            if (curr->random != nullptr && mapping.find(curr->random) == mapping.end()) {
+                mapping[curr->random] = new Node(curr->random->val);
+            }
+            Node* randomCopy = curr->random == nullptr ? nullptr : mapping[curr->random];
+            mapping[curr]->random = randomCopy;
+
             curr = curr->next;
         }
+
         return newHead;
     }
 };

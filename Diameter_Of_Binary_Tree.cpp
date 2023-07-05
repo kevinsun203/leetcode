@@ -13,14 +13,13 @@ struct TreeNode {
 
 class Solution {
 private:
-    int result;
+    int result=0;
 public:
     int diameterOfBinaryTree(TreeNode* root) {
         if (root == nullptr) {
             return 0;   
         }
-        result = 0;
-        helper(root, 1);
+        helper(root, 0);
         return result;
     }
 
@@ -28,10 +27,17 @@ public:
         if (root == nullptr) {
             return count-1;
         }
-        int left = helper(root->left, count+1);
-        int right = helper(root->right, count+1);
-        
-        result = max((left-count)+(right-count), result);
-        return max(left, right);
+
+        // Get max depths on either side 
+        int leftDepth = helper(root->left, count+1);
+        int rightDepth = helper(root->right, count+1);
+
+        // Get the current longest path and update the variable if necessary
+        int currLongest = (leftDepth - count) + (rightDepth - count);
+        result = currLongest > result ? currLongest : result;
+
+        // Return max depth 
+        return max(leftDepth, rightDepth);
+
     }
 };

@@ -24,8 +24,9 @@ public:
         if (root == nullptr) {
             return count-1;
         }
-        int left = traverse(root->left, count+1);
-        int right = traverse(root->right, count+1);
-        return max(left, right);
+
+        int leftDepth = traverse(root->left, count+1);
+        int rightDepth = traverse(root->right, count+1);
+        return max(leftDepth,rightDepth);
     }   
 };

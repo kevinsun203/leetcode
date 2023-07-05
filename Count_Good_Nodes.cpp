@@ -20,7 +20,7 @@ public:
         return answer;
     }
 
-    // DFS
+    // DFS - pre order traversal
     void helper(TreeNode* root, int max, int& answer) {
         if (root == nullptr) {
             return;
